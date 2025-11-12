@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout Page</title>
+<style>
+  body { font-family: Arial; padding: 20px; background: #f8f8f8; color: #333; }
+  h1 { text-align: center; }
+  .product { background: #fff; padding: 15px; margin: 10px 0; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+  .total-box { margin-top: 20px; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-weight: bold; text-align: center; }
+  #pay-button { display: none; margin-top: 20px; background: #007BFF; color: white; padding: 15px; border: none; border-radius: 10px; font-size: 18px; width: 100%; cursor: pointer; }
+  #pay-button:hover { background: #0056b3; }
+</style>
+</head>
+<body>
+
+<h1>Checkout</h1>
+
+<div class="product">
+  <label><input type="checkbox" class="item" data-price="30"> Compression Shirts — $30</label>
+</div>
+<div class="product">
+  <label><input type="checkbox" class="item" data-price="35"> Compression Shirts + Turtleneck — $35</label>
+</div>
+<div class="product">
+  <label><input type="checkbox" class="item" data-price="20"> Compression Shorts — $20</label>
+</div>
+<div class="product">
+  <label><input type="checkbox" class="item" data-price="17"> Baggy Shorts — $17</label>
+</div>
+
+<div class="total-box">
+  Total Items: <span id="total-items">0</span><br>
+  Total Price: $<span id="total-price">0.00</span>
+</div>
+
+<button id="pay-button">Pay Now</button>
+
+<script>
+const items = document.querySelectorAll('.item');
+const totalItems = document.getElementById('total-items');
+const totalPrice = document.getElementById('total-price');
+const payButton = document.getElementById('pay-button');
+
+function updateTotals() {
+  let count = 0;
+  let sum = 0;
+  items.forEach(i => {
+    if (i.checked) {
+      count++;
+      sum += parseFloat(i.dataset.price);
+    }
+  });
+  totalItems.textContent = count;
+  totalPrice.textContent = sum.toFixed(2);
+  payButton.style.display = count > 0 ? 'block' : 'none';
+}
+
+items.forEach(item => item.addEventListener('change', updateTotals));
+
+payButton.addEventListener('click', () => {
+  alert(`You selected ${totalItems.textContent} items.\nTotal: $${totalPrice.textContent}\n\n(Checkout coming soon!)`);
+});
+</script>
+
+</body>
+</html>
